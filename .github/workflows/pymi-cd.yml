@@ -17,16 +17,11 @@ jobs:
       uses: actions/setup-python@v1
       with:
         python-version: ${{ matrix.python-version }}
-    - name: Install vcredist2008 for Python 2.7
+    - name: Install vcredist140 for Python 2.7
       if: matrix.python-version == '2.7'
       shell: cmd
       run: |
-        choco install vcredist2008
-    - name: Install vcpython27 for Python 2.7
-      if: matrix.python-version == '2.7'
-      shell: cmd
-      run: |
-        choco install vcpython27
+        choco install vcredist140
     - name: Test and build PyMI
       shell: cmd
       run: |
