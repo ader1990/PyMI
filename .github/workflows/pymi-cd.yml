@@ -20,11 +20,11 @@ jobs:
     - name: Test and build PyMI
       shell: cmd
       run: |
-        setx path "%path%;C:\Program Files (x86)\Microsoft Visual Studio\2019\Enterprise\VC"
+        setx path "%path%;C:\Program Files (x86)\Microsoft Visual Studio\2019\Enterprise\VC;C:\Program Files (x86)\Microsoft Visual Studio\2019\Enterprise\VC\Tools\MSVC\14.23.28105\bin;C:\Program Files (x86)\Microsoft Visual Studio\2019\Enterprise\VC\Tools\MSVC\14.23.28105\bin\HostX86\x64"
         set DISTUTILS_USE_SDK=1
         set MSSdk=1
         pip install -r requirements.txt
-        pip install nose
+        pip install nose testtools
         pip install .
         nosetests wmi
         pip install wheel
