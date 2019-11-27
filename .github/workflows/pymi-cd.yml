@@ -22,6 +22,11 @@ jobs:
       shell: cmd
       run: |
         choco install vcredist140
+    - name: Install vcpython27 for Python 2.7
+      if: matrix.python-version == '2.7'
+      shell: cmd
+      run: |
+        choco install vcpython27
     - name: Test and build PyMI
       shell: cmd
       run: |
