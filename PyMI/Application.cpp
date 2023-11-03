@@ -19,15 +19,15 @@ static PyObject* Application_new(PyTypeObject *type, PyObject *args, PyObject *k
 
 static int Application_init(Application *self, PyObject *args, PyObject *kwds)
 {
-    wchar_t* appId = L"";
+    char* appId = "";
     static char *kwlist[] = { "app_id", NULL };
-    if (!PyArg_ParseTupleAndKeywords(args, kwds, "|u", kwlist, &appId))
+    if (!PyArg_ParseTupleAndKeywords(args, kwds, "|s", kwlist, &appId))
         return -1;
 
     try
     {
         AllowThreads(&self->cs, [&]() {
-            self->app = std::make_shared<MI::Application>(appId);
+            self->app = std::make_shared<MI::Application>(ToWstring(appId).c_str());
         });
         return 0;
     }
