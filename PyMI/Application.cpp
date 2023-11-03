@@ -40,12 +40,12 @@ static int Application_init(Application *self, PyObject *args, PyObject *kwds)
 
 static PyObject* Application_NewSession(Application *self, PyObject *args, PyObject *kwds)
 {
-    wchar_t* protocol = L"";
-    wchar_t* computerName = L".";
+    char* protocol = "";
+    char* computerName = "";
     PyObject* destinationOptions = NULL;
 
     static char *kwlist[] = { "protocol", "computer_name", "destination_options", NULL };
-    if (!PyArg_ParseTupleAndKeywords(args, kwds, "|uuO", kwlist, &protocol, &computerName, &destinationOptions))
+    if (!PyArg_ParseTupleAndKeywords(args, kwds, "|ssO", kwlist, &protocol, &computerName, &destinationOptions))
         return NULL;
 
     try
@@ -57,7 +57,7 @@ static PyObject* Application_NewSession(Application *self, PyObject *args, PyObj
 
         std::shared_ptr<MI::Session> session;
         AllowThreads(&self->cs, [&]() {
-            session = self->app->NewSession(protocol, computerName,
+            session = self->app->NewSession(ToWstring(protocol).c_str(), ToWstring(computerName).c_str(),
                 !CheckPyNone(destinationOptions) ? ((DestinationOptions*)destinationOptions)->destinationOptions : NULL);
         });
         return (PyObject*)Session_New(session);
