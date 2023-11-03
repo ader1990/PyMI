@@ -524,7 +524,7 @@ std::wstring ToWstring(const std::string& inString)
         return L"";
     }
 
-    const auto sizeNeeded = MultiByteToWideChar(CP_UTF8, 0, &string.at(0), (int)string.size(), nullptr, 0);
+    int sizeNeeded = MultiByteToWideChar(CP_UTF8, 0, &inString.at(0), (int)inString.size(), nullptr, 0);
     if (sizeNeeded <= 0)
     {
         DWORD err = GetLastError();
@@ -534,7 +534,7 @@ std::wstring ToWstring(const std::string& inString)
 
     std::wstring result(sizeNeeded, 0);
     sizeNeeded = MultiByteToWideChar(
-        CP_UTF8, 0, &string.at(0), (int)string.size(),
+        CP_UTF8, 0, &inString.at(0), (int)inString.size(),
         &result.at(0), sizeNeeded);
     if (sizeNeeded <= 0) {
         DWORD err = GetLastError();
