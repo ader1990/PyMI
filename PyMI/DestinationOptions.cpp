@@ -191,7 +191,7 @@ static PyObject* DestinationOptions_AddCredentials(DestinationOptions* self, PyO
 
     try
     {
-        if (certThumbprint && wcslen(certThumbprint))
+        if (ToWstring(certThumbprint).c_str() && wcslen(ToWstring(certThumbprint).c_str()))
             AllowThreads(&self->cs, [&]() {
                 self->destinationOptions->AddCredentials(ToWstring(authType).c_str(), ToWstring(certThumbprint).c_str());
             });
